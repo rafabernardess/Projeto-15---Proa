@@ -1,0 +1,130 @@
+:root {
+    --operator: +;
+    --brightness: 20%;
+    --circle: hsl(0, 0%, var(--brightness));
+    --text: hsl(0, 0%, calc(var(--brightness) var(--operator) 15%));
+    --icon-inactive: hsl(0, 0%, calc(var(--brightness) var(--operator) 20%));
+    --icon-active: hsl(0, 0%, calc(var(--brightness) var(--operator) 60%));
+    --main-background: hsl(0, 0%, calc(var(--brightness) var(--operator) 70%));
+    --background: hsl(0, 0%, calc(var(--brightness) var(--operator) 50%));
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    min-height: 100vh;
+    font-family: Roboto, Arial;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    background: var(--main-background);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.menu {
+    border-radius: 12px;
+    background: var(--background);
+    width: 300px;
+    height: 64px;
+    padding: 0 12px;
+    box-shadow: 0 12px 16px var(--shadow);
+    outline: 5px var(--icon-active) solid;
+}
+
+.menu > div {
+    display: flex;
+    height: 100%;
+    position: relative;
+}
+
+.menu > div label {
+    flex: 0 0 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.menu > div label ion-icon {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    color: var(--icon-inactive);
+    transform-origin: 50% 50%;
+}
+
+.menu > div label span {
+    font-size: 10px;
+    font-weight: 500;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+    opacity: 0;
+    color: var(--text);
+    transform-origin: 50% 0;
+}
+
+.menu > div input {
+    display: none;
+}
+
+.menu > div > span::after {
+    content: "";
+    width: 55px;
+    height: 55px;
+    display: block;
+    background: var(--circle);
+    position: absolute;
+    left: 44%;
+    top: 0;
+    box-shadow: 0 2px 8px var(--shadow);
+    margin: -20px 0 0 -22px;
+    border-radius: 50%;
+}
+
+.menu > div input:nth-of-type(1):checked + label + input + label + input + label + span {
+    --x: 0;
+}
+
+.menu > div input:nth-of-type(2):checked + label + input + label + span {
+    --x: 100%;
+}
+
+.menu > div input:nth-of-type(3):checked + label + span {
+    --x: 200%;
+}
+
+.menu > div > span {
+    --x: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 33.33%;
+    transition: transform 0.7s cubic-bezier(1, -0.58, 0.43, 1.23);
+    transform: translateX(var(--x));
+}
+
+.menu > div input:checked + label ion-icon {
+    --y: -24px;
+    --s: 1;
+    color: var(--icon-active);
+}
+
+.menu > div > input:checked + label span {
+    --s: 1;
+    --y: -14px;
+    opacity: 1;
+}
+
+.menu > div label ion-icon, 
+.menu > div label span {
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.6, 0.64, 0.48, 1.12), opacity 0.7s ease, color 0.7s ease;
+    transform: translateY(var(--y)) scale(var(--s));
+}
